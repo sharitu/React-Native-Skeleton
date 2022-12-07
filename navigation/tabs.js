@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 
 import HomeScreen from '../screens/Home';
 import ClosetScreen from '../screens/Closet';
@@ -9,29 +9,35 @@ import { useState } from "react";
 
 const Tab = createBottomTabNavigator();
 
-const CustomTabBarButton = ({ children, onPress }) => (
-  <TouchableOpacity
-    style={{
-      top: -30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...style.shadow
-    }}
-    onPress={onPress}
-  >
-    <View style={{
-      width: 70,
-      height: 70,
-      borderRadius: 35,
-      backgroundColor: '#e32f45'
-    }}>
-      { children }
-    </View>
-  </TouchableOpacity>
-);
 
 const Tabs = () => {
   const [ isAddScreenActive, setAddScreenActive ] = useState(false); // identify whether Add Item screen is active
+  
+  const CustomTabBarButton = ({ children, onPress }) => (
+    <Pressable
+      style={{
+        top: -30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        ...style.shadow
+      }}
+      onPress={onPress}
+    >
+      <View style={{
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#e32f45'
+      }}>
+        { children }
+      </View>
+    </Pressable>
+  );
+
+  const onAddButtonPress = () => {
+    setAddScreenActive(!isAddScreenActive);
+  };
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -78,7 +84,7 @@ const Tabs = () => {
                   fontSize: 12
                 }}
               >
-                Home
+                Home {isAddScreenActive ? 1 : 0}
               </Text>
             </View>
           ),
@@ -127,7 +133,7 @@ const Tabs = () => {
           tabBarIcon: () => (
             <Image
               source={
-                require('../assets/add.png')
+                isAddScreenActive ? require('../assets/cancel.png') : require('../assets/add.png')
               }
               resizeMode='contain'
               style={{
@@ -135,10 +141,13 @@ const Tabs = () => {
                 height: 30,
                 tintColor: '#fff'
               }}
+              onPress={onAddButtonPress}
             />
           ),
           tabBarButton: (props) => (
-            <CustomTabBarButton { ...props } />
+            <CustomTabBarButton
+              { ...props }
+            />
           )
         }}
       ></Tab.Screen>
