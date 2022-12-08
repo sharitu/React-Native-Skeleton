@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StyleSheet, View, Text, Image, Pressable } from 'react-native';
 
 import HomeScreen from '../screens/Home';
@@ -9,10 +10,31 @@ import { useState } from "react";
 
 const Tab = createBottomTabNavigator();
 
+const Stack = createNativeStackNavigator();
 
 const Tabs = () => {
   const [ isAddScreenActive, setAddScreenActive ] = useState(false); // identify whether Add Item screen is active
   
+  const HomeStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name='CategoryList'
+          component={HomeScreen}
+          options={{
+            title: 'My Wardrobe'
+          }}
+        />
+        <Stack.Screen
+          name='CategoryItems'
+          component={ClosetScreen}
+          // option={{
+          //   title: 'My Wardrobe'
+          // }}
+        />
+      </Stack.Navigator>
+    );
+  }
   const CustomTabBarButton = ({ children, onPress }) => (
     <Pressable
       style={{
@@ -57,7 +79,7 @@ const Tabs = () => {
     >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStack}
         options={{
           tabBarIcon: ({focused}) => (
             <View
@@ -84,10 +106,11 @@ const Tabs = () => {
                   fontSize: 12
                 }}
               >
-                Home {isAddScreenActive ? 1 : 0}
+                Home
               </Text>
             </View>
           ),
+        headerShown: false
         }}
       ></Tab.Screen>
       <Tab.Screen 

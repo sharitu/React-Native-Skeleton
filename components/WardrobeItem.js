@@ -5,33 +5,81 @@ const WardrobeItem = ({item, onDeleteItem}) => {
 
   const styles = StyleSheet.create({
     container: {
-      padding: 16,
+      paddingHorizontal: 24,
+      paddingTop: 24,
       marginVertical: 8,
       marginHorizontal: 16,
-      backgroundColor: '#84c5d9',
-      flexDirection: 'row',
-      justifyContent: "space-between"
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flex: 1,
+      borderRadius: 16
     },
-    cancelCTA: {
-      height: 24,
-      width: 24
+    image: {
+      flex: 1,
+      height: 120,
+      maxWidth: '50%',
+      borderWidth: 2,
+      borderColor: '#8fcbbc'
+    },
+    itemCTAContainer: {
+      flex: 1,
+      justifyContent: "space-between",
+      alignItems: "center",
+      flexDirection: 'row'
+    },
+    cta: {
+      flex: 1,
+      alignItems: 'center',
+      padding: 12,
+      fontSize: 12
+    },
+    content: {
+      flex: 1,
+      alignItems: "center",
+      flexDirection: 'row',
+      width: '100%'
+    },
+    itemDetails: {
+      padding: 16
     }
   });
 
-  function deleteItemHandler () {
-    onDeleteItem(item.id)
-  }
-
   return (
-    <Pressable onPress={onDeleteItem.bind(this, item.key)}>
-      <View style={styles.container}>
-        <Text>{item.name}</Text>
+    <View style={styles.container}>
+      <View style={styles.content}>
         <Image
-          style={styles.cancelCTA}
-          source={ require('../assets/cancel.png') }
+          source={{
+            uri: item.uri
+          }}
+          style={styles.image}
         />
+        <View style={styles.itemDetails}>
+          <Text>{item.name.toUpperCase()}</Text>
+          <Text>Last Worn on: {item.lastWorn}</Text>
+          <Text>Added on: {item.dateAdded}</Text>
+          <Text>Added on: {item.dateAdded}</Text>
+        </View>
       </View>
-    </Pressable>
+      <View style={styles.itemCTAContainer}>
+        <Pressable
+          style={styles.cta}
+          // onPress={onDeleteItem.bind(this, item.id)}
+        >
+          <Text style={{color: '#16b872'}}>EDIT</Text>
+        </Pressable>
+        <Pressable
+          style={styles.cta}
+          onPress={onDeleteItem.bind(this, item.id)}
+        >
+          <Text style={{color: 'red'}}>DELETE</Text>
+          {/* <Image
+            style={styles.cancelCTA}
+            source={ require('../assets/cancel.png') }
+          /> */}
+        </Pressable>
+      </View>
+    </View>
   );
 };
 
