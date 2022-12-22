@@ -28,8 +28,8 @@ const Tabs = () => {
         <Stack.Screen
           name='CategoryItems'
           component={ClosetScreen}
-          // option={{
-          //   title: 'My Wardrobe'
+          // options={({route}) => {
+          //   return {title: route.params?.categoryId || 'My Wardrobe'}
           // }}
         />
       </Stack.Navigator>

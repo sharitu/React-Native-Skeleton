@@ -6,7 +6,23 @@ const styles = StyleSheet.create({
     padding: 16,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.6)'
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
   },
   input: {
     borderWidth: 1,
@@ -47,28 +63,31 @@ const AddItem = (props) => {
     <Modal
       visible={props.visible}
       animationType="slide"
+      transparent={true}
     >
       <View style={styles.addContainer}>
-        <Image source={require('../assets/closet.png')} style={styles.addIcon} />
-        <TextInput
-          placeholder='Blue Jeans, LBB etc'
-          onChangeText={itemInputHandler}
-          value={inputItem}
-          style={styles.input}
-        />
-        <View style={styles.buttonContainer}>
-          <View style={styles.button}>
-            <Button
-              title="Cancel"
-              onPress={props.onCancel}
-            />
-          </View>
-          <View style={styles.button}>
-            <Button
-              title="Add to Wardrobe"
-              disabled={inputItem.length <= 0}
-              onPress={addItemHandler}
-            />
+        <View style={styles.modalView}>
+          <Image source={require('../assets/closet.png')} style={styles.addIcon} />
+          <TextInput
+            placeholder='Blue Jeans, LBB etc'
+            onChangeText={itemInputHandler}
+            value={inputItem}
+            style={styles.input}
+          />
+          <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+              <Button
+                title="Cancel"
+                onPress={props.onCancel}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                title="Add to Wardrobe"
+                disabled={inputItem.length <= 0}
+                onPress={addItemHandler}
+              />
+            </View>
           </View>
         </View>
       </View>

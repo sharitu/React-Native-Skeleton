@@ -1,21 +1,28 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { View, Text, StyleSheet, FlatList, Button } from 'react-native';
 import AddItem from '../components/AddItem';
 import WardrobeItem from '../components/WardrobeItem';
-import { WARDROBE_ITEMS } from '../data/data';
+import { CATEGORIES, WARDROBE_ITEMS } from '../data/data';
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#8fcbbc',
-    paddingBottom: 160
+    paddingBottom: 160,
+    flex: 1
   }
 });
 
-const ClosetScreen = () => {
-  const route = useRoute();
+const ClosetScreen = ({route, navigation}) => {
+  
+  useLayoutEffect(() => {
+    const categoryName = CATEGORIES.find(category => category.id === route.params?.categoryId)?.title || 'List';
+    navigation.setOptions({
+      title: categoryName
+    });
+  });
+ 
   const [isModalVisible, setModalVisibility] = useState(false);
   const [listOfItems, setListOfItems] = useState(WARDROBE_ITEMS.filter(item => item.categoryId === route.params?.categoryId));
 
